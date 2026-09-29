@@ -1,0 +1,140 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Label Mapping Configuration
+# Maps each dataset's native attack labels → unified 7-category taxonomy
+#
+# Target categories:
+#   normal, ddos, phishing, malware, ransomware, sql_injection, mitm, other
+#
+# Edit this file to adjust mappings without touching any Python code.
+# ─────────────────────────────────────────────────────────────────────────────
+
+target_categories:
+  - normal
+  - ddos
+  - phishing
+  - malware
+  - ransomware
+  - sql_injection
+  - mitm
+  - other
+
+# ── NSL-KDD label mapping ─────────────────────────────────────────────────────
+# NSL-KDD uses KDD'99 attack family names.
+# Reference: https://www.unb.ca/cic/datasets/nsl.html
+nsl_kdd:
+  normal: normal
+
+  # DoS → DDoS (flooding/denial-of-service)
+  back: ddos
+  land: ddos
+  neptune: ddos
+  pod: ddos
+  smurf: ddos
+  teardrop: ddos
+  mailbomb: ddos
+  apache2: ddos
+  processtable: ddos
+  udpstorm: ddos
+
+  # Probe → maps to reconnaissance (other)
+  ipsweep: other
+  nmap: other
+  portsweep: other
+  satan: other
+  mscan: other
+  saint: other
+
+  # R2L (Remote-to-Local) — unauthorized access → phishing/malware
+  ftp_write: malware
+  guess_passwd: phishing
+  imap: phishing
+  multihop: malware
+  phf: phishing
+  spy: malware
+  warezclient: malware
+  warezmaster: malware
+  sendmail: malware
+  named: malware
+  snmpgetattack: malware
+  snmpguess: malware
+  xlock: malware
+  xsnoop: malware
+  httptunnel: mitm
+
+  # U2R (User-to-Root) — privilege escalation → malware/other
+  buffer_overflow: malware
+  loadmodule: malware
+  perl: malware
+  rootkit: malware
+  ps: malware
+  sqlattack: sql_injection
+  xterm: malware
+
+# ── UNSW-NB15 label mapping ───────────────────────────────────────────────────
+# UNSW-NB15 attack_cat column values.
+# Reference: https://research.unsw.edu.au/projects/unsw-nb15-dataset
+unsw_nb15:
+  Normal: normal
+  normal: normal
+
+  # DoS family
+  DoS: ddos
+  Backdoors: malware
+  backdoor: malware
+  Backdoor: malware
+
+  # Reconnaissance
+  Reconnaissance: other
+  reconnaissance: other
+
+  # Fuzzers → probe/unknown
+  Fuzzers: other
+  fuzzers: other
+
+  # Analysis → intrusion attempt
+  Analysis: other
+  analysis: other
+
+  # Shellcode → malware/exploit
+  Shellcode: malware
+  shellcode: malware
+
+  # Worms → malware
+  Worms: malware
+  worms: malware
+
+  # Exploits → malware
+  Exploits: malware
+  exploits: malware
+
+  # Generic → other
+  Generic: other
+  generic: other
+
+  # MITM / man-in-the-middle
+  MITM: mitm
+  mitm: mitm
+
+  # Phishing
+  Phishing: phishing
+  phishing: phishing
+
+  # Ransomware
+  Ransomware: ransomware
+  ransomware: ransomware
+
+  # SQL injection
+  "SQL Injection": sql_injection
+  sql_injection: sql_injection
+
+# ── Severity mapping ──────────────────────────────────────────────────────────
+# Used by the alerting module to assign severity levels
+severity:
+  ddos: high
+  ransomware: high
+  malware: high
+  sql_injection: high
+  mitm: medium
+  phishing: medium
+  other: low
+  normal: none
